@@ -1,0 +1,25 @@
+<header><h3>Sign in:</h3></header>
+<div class="col-md-8 col-md-offset-2">
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm.value)">
+        <div class="form-group">
+            <label for="email">EMAIL</label>
+            <input
+                    type="text"
+                    id="email"
+                    name="email"
+                    formControlName="email">
+        </div>
+        <div class="form-group">
+            <label for="password">PASSWORD</label>
+            <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    formControlName="password">
+        </div>
+        <div>
+       <button type="button" class="btn btn-primary" (click)="onHomeClick()">Home</button>
+       <button class="btn btn-primary" type="submit">Submit</button>
+       </div>
+    </form>
+</div>

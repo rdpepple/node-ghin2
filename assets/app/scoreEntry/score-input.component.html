@@ -1,0 +1,54 @@
+
+<div class="col-md-8 col-md-offset-2">
+    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+        <label for="gc_sel">Course Select:</label>
+        <div class="form-group">
+            <select [ngModel]="selectedCourse" (ngModelChange)="onChange($event)" name="sel2">
+                <option [value]="course" *ngFor="let course of courses">{{course}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+          <label for="date_played">Date Played</label>
+          <my-date-picker name="mydate" [options]="myDatePickerOptions"
+                          [(ngModel)]="model" required></my-date-picker>
+        </div>
+        <div class="form-group">
+            <label for="course">Course</label>
+            <input
+                    type="text"
+                    id="course"
+                    name="course"
+                    class="form-control"
+                    [ngModel]="score?.course">
+        </div>
+        <div class="form-group">
+            <label for="slope">Slope</label>
+            <input
+                    type="number"
+                    id="slope"
+                    name="slope"
+                    class="form-control"
+                    [ngModel]="score?.slope">
+        </div>
+        <div class="form-group">
+            <label for="rating">Rating</label>
+            <input
+                    type="number"
+                    id="rating"
+                    name="rating"
+                    class="form-control"
+                    [ngModel]="score?.rating">
+        </div>
+        <div class="form-group">
+            <label for="score">Score</label>
+            <input
+                    type="number"
+                    id="score"
+                    name="score"
+                    class="form-control"
+                    [ngModel]="score?.score">
+        </div>
+       <button type="button" class="btn btn-danger" (click)="onClear(f)">Clear</button>
+       <button class="btn btn-primary" type="submit">Save</button>
+    </form>
+</div>
