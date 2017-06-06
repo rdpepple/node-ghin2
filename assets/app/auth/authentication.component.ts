@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { AuthService } from "./auth.service";
+import { Router } from "@angular/router";
 
 @Component({
     selector: 'app-authentication',
@@ -13,6 +14,7 @@ import { AuthService } from "./auth.service";
                     <li routerLinkActive="active" *ngIf="isLoggedIn()"><a [routerLink]="['logout']">Logout</a></li>
                 </ul>
             </nav>
+            <hr>
         </header>
         <div class="row spacing">
            <router-outlet></router-outlet>
@@ -20,7 +22,8 @@ import { AuthService } from "./auth.service";
     `
 })
 export class AuthenticationComponent {
-    constructor(private authService: AuthService) {}
+
+    constructor(private authService: AuthService, private router: Router) {}
 
     isLoggedIn() {
         return this.authService.isLoggedIn();

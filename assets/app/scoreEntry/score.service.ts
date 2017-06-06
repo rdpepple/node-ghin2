@@ -5,40 +5,43 @@ import { Observable } from "rxjs";
 import { ErrorService } from '../errors/error.service';
 
 import { Score } from "./score.model";
+import { Course } from './course.model';
 
 @Injectable()
 export class ScoreService {
   private scores: Score[] = [];
+  private course: Course;
+  private score: Score;
 
   constructor(private http: Http, private errorService: ErrorService) {}
 
   addScore(score: Score) {
       const body = JSON.stringify(score);
       const headers = new Headers({'Content-Type': 'application/json'});
-      const token = localStorage.getItem('token')
-        ? '?token=' + localStorage.getItem('token')
-        : '';
-      return this.http.post('http://localhost:3000/score' + token, body, {headers: headers})
-        .map((response: Response) => {
-            const result = response.json();
-            const course = new Score(
-              result.obj.date_played,
-              result.obj.course,
-              result.obj.slope,
-              result.obj.rating,
-              result.obj.score,
-              result.obj.user._id);
-            this.scores.push(score);
-            return score;  
-        })
-        .catch((error: Response) => { 
+      var token = localStorage.getItem('token')
+          ? '?token=' + localStorage.getItem('token')
+          : '';
+      const userid = localStorage.getItem('userId')
+          ? '&userid=' + localStorage.getItem('userId')
+          : '';  
+      const params = token + userid;
+      return this.http.post(`http://localhost:3000/score/addscore${params}`, body, {headers: headers})
+        .map((response: Response) => response.json())
+        .catch((error: Response) => {
           this.errorService.handleError(error.json());
           return Observable.throw(error.json())
         });
   }
 
   getScores() {
-      return this.http.get('http://localhost:3000/scores')
+      var token = localStorage.getItem('token')
+          ? '?token=' + localStorage.getItem('token')
+          : '';
+      const userid = localStorage.getItem('userId')
+          ? '&userid=' + localStorage.getItem('userId')
+          : '';  
+      const params = token + userid;
+      return this.http.get(`http://localhost:3000/score/scores${params}`)
         .map((response: Response) => {
           const scores = response.json().obj;
           let userScores: Score[] = [];
@@ -50,25 +53,18 @@ export class ScoreService {
                score.rating,
                score.score)
             );
+            userScores.sort(function(a, b){
+                var score1=a.date_played.toLowerCase(), score2=b.date_played.toLowerCase()
+                if (score1 < score2) //sort string ascending
+                    return -1 
+                if (score1 > score2)
+                    return 1
+                return 0 //default return value (no sorting)
+            });
           }
           this.scores = userScores;
           return userScores;
         })
-        .catch((error: Response) => { 
-          this.errorService.handleError(error.json());
-          return Observable.throw(error.json())
-        });
-  }
-
-    updateScoreUsed(score: Score) {   
-      const body = JSON.stringify(score);
-      const headers = new Headers({'Content-Type': 'application/json'});
-      const token = localStorage.getItem('token')
-        ? '?token=' + localStorage.getItem('token')
-        : '';
-      
-      return this.http.patch('http://localhost:3000/scoreused' + score.userId + token, body, {headers: headers})
-        .map((response: Response) => response.json())
         .catch((error: Response) => { 
           this.errorService.handleError(error.json());
           return Observable.throw(error.json())

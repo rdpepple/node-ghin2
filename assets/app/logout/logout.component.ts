@@ -1,16 +1,11 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 
-import { AuthService } from "./auth.service";
+import { AuthService } from "../auth/auth.service";
 
 @Component({
-    selector: 'app-logout',
-    template: `
-        <div class="col-md-12">
-            <button type="button" class="btn btn-primary" (click)="onHomeClick()">Home</button>
-            <button class="btn btn-danger" (click)="onLogout()">Logout</button>
-        </div>
-    `
+    selector: 'ghin-logout',
+    templateUrl: './logout.component.html'
 })
 export class LogoutComponent {
     constructor(private authService: AuthService, private router: Router) {}

@@ -4,6 +4,7 @@ var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
 var mongoose = require('mongoose');
 
+var User = require('../models/user');
 var Course = require('../models/course');
 
 router.use('/', function (req, res, next) {
@@ -18,9 +19,8 @@ router.use('/', function (req, res, next) {
     })
 });
 
-router.get('/courses', function (req, res, next) {
+  router.get('/coursenames', function (req, res, next) {
   var userId = mongoose.Types.ObjectId(req.query.userid);
-  console.log(userId);
   Course.find({user : userId}, function(err, courses) {
        if (err) {
          return res.status(500).json({
@@ -37,6 +37,7 @@ router.get('/courses', function (req, res, next) {
 
 router.post('/addcourse', function (req, res, next) {
     var decoded = jwt.decode(req.query.token);
+    var userId = mongoose.Types.ObjectId(req.query.userid);
     Course.findById(decoded.user._id, function (err, course) {
         if (err) {
             return res.status(500).json({
@@ -48,7 +49,7 @@ router.post('/addcourse', function (req, res, next) {
           name: req.body.name,
           slope: req.body.slope,
           rating: req.body.rating,
-          user: user          
+          user: userId          
         });
         course.save(function (err, result) {
             if (err) {
@@ -57,8 +58,6 @@ router.post('/addcourse', function (req, res, next) {
                     error: err
                 });
             }
-            user.courses.push(result);
-            user.save();
             res.status(201).json({
                 message: 'Saved message',
                 obj: result
@@ -68,7 +67,8 @@ router.post('/addcourse', function (req, res, next) {
 });
 
 router.get('/course', function(req, res, next) {
-  Course.findOne({'course.name' : `\"${req.params.courseName}\"`, 'course.user' : `\"${req.params.userId}\"`}, function (err, course) {
+  var userId = mongoose.Types.ObjectId(req.query.userid);
+  Course.findOne({name : req.query.coursename, user : userId}, function (err, course) {
     if (err) {
       return res.status(500). json({
         title: 'An error occurred',
@@ -81,24 +81,9 @@ router.get('/course', function(req, res, next) {
         error: {message: 'Course not found'}
       });
     }
-    if (course.user != decoded.user._id) {
-      return res.status(401).json({
-                title: 'Not Authenticated',
-                error: {message: 'Users do not match'}
-            });
-    }
-    course.name = req.body.name;
-    course.save(function(err, selectedCourse) {
-      if (err) {
-        return res.status(500).json({
-           title: 'An error occurred',
-           error: err 
-        });
-      }
-      res.status(200).json({
-          message: 'Returned selected course',
-          obj: selectedCourse
-      });
+    res.status(200).json({
+        message: 'Returned selected course',
+        obj: course
     });
   });
 });

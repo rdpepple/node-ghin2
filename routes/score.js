@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
+var mongoose = require('mongoose');
 
 var User = require('../models/user');
 var Score = require('../models/score');
@@ -18,9 +19,11 @@ router.use('/', function (req, res, next) {
     })
 });
 
-router.get('/', function (req, res, next) {
-  Score.find()
-    .populate('name')
+router.get('/scores', function (req, res, next) {
+  var userId = mongoose.Types.ObjectId(req.query.userid);
+  Score.find({user : userId})
+    .sort({'createdAt': -1})
+    .limit(20)
     .exec(function(err, scores) {
        if (err) {
          return res.status(500).json({
@@ -35,35 +38,27 @@ router.get('/', function (req, res, next) {
     });
 });
 
-router.post('/', function (req, res, next) {
+router.post('/addscore', function (req, res, next) {
     var decoded = jwt.decode(req.query.token);
-    User.findById(decoded.user._id, function (err, user) {
+    var userId = mongoose.Types.ObjectId(req.query.userid);
+    var score = new Score({
+        date_played: req.body.date_played,
+        course: req.body.course,
+        slope: req.body.slope,
+        rating: req.body.rating,
+        score: req.body.score,
+        user: userId
+    });
+    score.save(function (err, result) {
         if (err) {
             return res.status(500).json({
                 title: 'An error occurred',
                 error: err
             });
         }
-        var score = new Score({
-          course: req.body.name,
-          slope: req.body.slope,
-          rating: req.body.rating,
-          score: req.body.score,
-          user: user          
-        });
-        score.save(function (err, result) {
-            if (err) {
-                return res.status(500).json({
-                    title: 'An error occurred',
-                    error: err
-                });
-            }
-            user.scores.push(result);
-            user.save();
-            res.status(201).json({
-                message: 'Saved message',
-                obj: result
-            });
+        res.status(201).json({
+            message: 'Saved message',
+            obj: result
         });
     });
 });

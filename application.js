@@ -12,8 +12,12 @@ var courseRoutes = require('./routes/course');
 var scoreRoutes = require('./routes/score');
 
 var app = express();
-mongoose.disconnect();
-mongoose.connect('localhost:27017/handicap_data');
+mongoose.Promise = global.Promise;
+
+mongoose.connect('localhost:27017/handicap_data')
+.catch ((err) => {
+        console.log(err);
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

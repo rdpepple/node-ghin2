@@ -1,54 +1,58 @@
 
-<div class="col-md-8 col-md-offset-2">
-    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
-        <label for="gc_sel">Course Select:</label>
+<!--<div class="col-md-8 col-md-offset-2">-->
+<div style="max-width: 500px; border: '3px solid #73AD21'">
+    <form [formGroup]="scoreForm" (ngSubmit)="onSubmit()" novalidate>
+        <label for="gc_sel">Select Golf Course from list</label>
         <div class="form-group">
-            <select [ngModel]="selectedCourse" (ngModelChange)="onChange($event)" name="sel2">
-                <option [value]="course" *ngFor="let course of courses">{{course}}</option>
+            <select formControlName="selectedCourse" (change)="onChange($event.target.value)" name="gc-sel" id="gc-sel" class="form-control">
+                <option [value]="course" *ngFor="let course of courseList">{{course}}</option>
             </select>
         </div>
         <div class="form-group">
-          <label for="date_played">Date Played</label>
-          <my-date-picker name="mydate" [options]="myDatePickerOptions"
-                          [(ngModel)]="model" required></my-date-picker>
+            <label for="datePlayed">Date Played</label>
+            <my-date-picker name="datePlayed" 
+                            [options]="scoreDatePickerOptions"
+                            formControlName="datePlayed">
+            </my-date-picker>
         </div>
         <div class="form-group">
             <label for="course">Course</label>
             <input
                     type="text"
                     id="course"
-                    name="course"
                     class="form-control"
-                    [ngModel]="score?.course">
+                    formControlName="courseName">
         </div>
         <div class="form-group">
             <label for="slope">Slope</label>
             <input
                     type="number"
                     id="slope"
-                    name="slope"
                     class="form-control"
-                    [ngModel]="score?.slope">
+                    formControlName="courseSlope">
         </div>
         <div class="form-group">
-            <label for="rating">Rating</label>
+            <label for="floatNumber">Rating</label>
             <input
                     type="number"
-                    id="rating"
-                    name="rating"
+                    min="50"
+                    max="80"
+                    step="0.1"
+                    id="floatNumber"
                     class="form-control"
-                    [ngModel]="score?.rating">
+                    formControlName="courseRating">
         </div>
         <div class="form-group">
-            <label for="score">Score</label>
+            <label for="scoreEntered">Score</label>
             <input
                     type="number"
-                    id="score"
-                    name="score"
+                    id="scoreEntered"
+                    min="50"
+                    max="150"
                     class="form-control"
-                    [ngModel]="score?.score">
+                    formControlName="scoreEntered">
         </div>
-       <button type="button" class="btn btn-danger" (click)="onClear(f)">Clear</button>
+       <button type="button" class="btn btn-danger" (click)="onClear()">Clear</button>
        <button class="btn btn-primary" type="submit">Save</button>
     </form>
 </div>
