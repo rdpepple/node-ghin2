@@ -1,25 +1,27 @@
-<div class="col-md-12">
-<h2 id="scoreDisplay_h2">Score table for {{userFirstName}}</h2>
-<br>
-<div class="mdl-grid">
-    <div class="mdl-cell mdl-cell--4-col">
-        <div class="populate-table">
-            <table id="scoreTableDisplay" class="table table-bordered table-responsive table-condensed">
-                <tr>
-                    <th>Date Played</th>
-                    <th>Course</th>
-                    <th>Score</th>
-                    <th>Slope</th>
-                    <th>Rating</th>
-                </tr>
-                <tr *ngFor="let score of scoreTableMarked" [style.background-color]="getStyleBG(score.used)" [style.color]="getStyleColor(score.used)">
-                    <td>{{ score.date_played }}</td>
-                    <td>{{ score.course }}</td>
-                    <td>{{ score.score }}</td>
-                    <td>{{ score.slope }}</td>                    
-                    <td>{{ score.rating }}</td>
-                </tr>
-            </table>
+<div class="row">
+    <div class="col-md-12">
+    <h2 id="scoreTableDisplay_h2">Score table for {{userFirstName}}</h2>
+    <br>
+    <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--4-col">
+            <div class="populate-table">
+                <table class="table table-bordered table-responsive table-condensed">
+                    <tr>
+                        <th id="scoreTableDisplay">Date Played</th>
+                        <th id="scoreTableDisplay">Course</th>
+                        <th id="scoreTableDisplay">Score</th>
+                        <th id="scoreTableDisplay">Slope</th>
+                        <th id="scoreTableDisplay">Rating</th>
+                    </tr>
+                    <tr *ngFor="let score of scoreTableMarked" [style.background-color]="getStyleBG(score.used)" [style.color]="getStyleColor(score.used)">
+                        <td id="scoreTableDisplay">{{ score.date_played }}</td>
+                        <td id="scoreTableDisplay">{{ score.course }}</td>
+                        <td id="scoreTableDisplay">{{ score.score }}</td>
+                        <td id="scoreTableDisplay">{{ score.slope }}</td>                    
+                        <td id="scoreTableDisplay">{{ score.rating }}</td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
 </div>
