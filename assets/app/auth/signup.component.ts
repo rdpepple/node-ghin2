@@ -10,24 +10,25 @@ import { User } from "./user.model";
     templateUrl: './signup.component.html'
 })
 export class SignupComponent implements OnInit {
-    myForm: FormGroup;
+    signupForm: FormGroup;
 
     constructor(private authService: AuthService, private router: Router) {}
 
-    onSubmit() {
+    onSubmit(signupUserItem) {
         const user = new User(
-            this.myForm.value.email,
-            this.myForm.value.password,
-            this.myForm.value.firstName,
-            this.myForm.value.lastName,
-            this.myForm.value.ghin
+            signupUserItem.email,
+            signupUserItem.password,
+            signupUserItem.firstName,
+            signupUserItem.lastName,
+            signupUserItem.ghin
         );
         this.authService.signup(user)
             .subscribe(
                 data => console.log(data),
                 error => console.error(error)
                 );
-        this.myForm.reset();
+        this.signupForm.reset();
+        this.router.navigateByUrl('/auth');
     }
 
     onHomeClick() {
@@ -35,15 +36,15 @@ export class SignupComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.myForm = new FormGroup({
-            firstName: new FormControl(null, Validators.required),
-            lastName: new FormControl(null, Validators.required),
-            ghin: new FormControl(null, Validators.required),
-            email: new FormControl(null, [
+        this.signupForm = new FormGroup({
+            firstName: new FormControl('', Validators.required),
+            lastName: new FormControl('', Validators.required),
+            ghin: new FormControl('', Validators.required),
+            email: new FormControl('', [
                 Validators.required,
                 Validators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
             ]),
-            password: new FormControl(null, Validators.required)
+            password: new FormControl('', Validators.required)
         });
     }
 }

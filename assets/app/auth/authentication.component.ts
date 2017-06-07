@@ -14,7 +14,6 @@ import { Router } from "@angular/router";
                     <li routerLinkActive="active" *ngIf="isLoggedIn()"><a [routerLink]="['logout']">Logout</a></li>
                 </ul>
             </nav>
-            <hr>
         </header>
         <div class="row spacing">
            <router-outlet></router-outlet>

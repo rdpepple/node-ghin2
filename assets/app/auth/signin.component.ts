@@ -10,12 +10,12 @@ import { AuthService } from "./auth.service";
     templateUrl: './signin.component.html'
 })
 export class SigninComponent implements OnInit {
-    myForm;
+    signinForm;
 
     constructor(private authService: AuthService, private router: Router) {}
 
     ngOnInit() {
-        this.myForm = new FormGroup({
+        this.signinForm = new FormGroup({
             email: new FormControl('', [
                 Validators.required,
                 Validators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
@@ -28,8 +28,8 @@ export class SigninComponent implements OnInit {
       this.router.navigateByUrl('/auth');
     }
 
-    onSubmit(userItem) {
-        this.authService.signin(userItem)
+    onSubmit(signinUserItem) {
+        this.authService.signin(signinUserItem)
             .subscribe(
                 data => {
                     localStorage.setItem('token', data.token);
@@ -40,6 +40,6 @@ export class SigninComponent implements OnInit {
                 },
                 error => console.error(error)
             );
-        this.myForm.reset();
+        this.signinForm.reset();
    }
 }

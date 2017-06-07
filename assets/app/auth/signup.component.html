@@ -1,5 +1,5 @@
 <div class="col-md-8 col-md-offset-2">
-    <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit(signupForm.value)">
         <div class="form-group">
             <label for="firstName">First Name</label>
             <input
@@ -45,7 +45,7 @@
             <button
                     class="btn btn-primary"
                     type="submit"
-                    [disabled]="!myForm.valid">Submit</button>
+                    [disabled]="!signupForm.valid">Submit</button>
         </div>
     </form>
 </div>

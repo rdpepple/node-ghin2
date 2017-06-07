@@ -5,13 +5,13 @@ var bcrypt = require('bcryptjs');
 
 var User = require('../models/user');
 
-router.post('/', function (req, res, next) {
+router.post('/signup', function (req, res, next) {
     var user = new User({
+        email: req.body.email,
+        password: bcrypt.hashSync(req.body.password, 10),
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        ghin: req.body.ghin,
-        password: bcrypt.hashSync(req.body.password, 10),
-        email: req.body.email
+        ghin: req.body.ghin
     });
     user.save(function(err, result) {
         if (err) {
