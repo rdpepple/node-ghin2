@@ -22,8 +22,6 @@ router.use('/', function (req, res, next) {
 router.get('/scores', function (req, res, next) {
   var userId = mongoose.Types.ObjectId(req.query.userid);
   Score.find({user : userId})
-    .sort({'createdAt': -1})
-    .limit(20)
     .exec(function(err, scores) {
        if (err) {
          return res.status(500).json({

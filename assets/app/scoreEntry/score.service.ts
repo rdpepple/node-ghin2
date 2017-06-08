@@ -44,27 +44,33 @@ export class ScoreService {
       return this.http.get(`http://localhost:3000/score/scores${params}`)
         .map((response: Response) => {
           const scores = response.json().obj;
-          let userScores: Score[] = [];
+          let allUserScores: Score[] = [];
           for (let score of scores) {
-            userScores.push(new Score(
+            allUserScores.push(new Score(
                score.date_played,
                score.course,
                score.slope,
                score.rating,
                score.score)
-            );
-            userScores.sort(function(a, b){
-                var score1=a.date_played.toLowerCase(), score2=b.date_played.toLowerCase()
-                if (score1 < score2) //sort string ascending
-                    return -1 
-                if (score1 > score2)
-                    return 1
-                return 0 //default return value (no sorting)
-            });
-          }
-          this.scores = userScores;
-          return userScores;
-        })
+          )};
+          allUserScores.sort(function(a, b){
+              var score1=a.date_played.toLowerCase(), score2=b.date_played.toLowerCase()
+              if (score1 < score2) //sort string ascending
+                  return -1 
+              if (score1 > score2)
+                  return 1
+              return 0 //default return value (no sorting)
+        });
+        var numUserScores = allUserScores.length;
+        var startPos = allUserScores.length-20;
+        let userScores: Score[] = [];
+        var scorePos;
+        for (scorePos= startPos; scorePos < allUserScores.length; scorePos++) {
+            userScores.push(allUserScores[scorePos]);
+        }
+        this.scores = userScores;
+        return userScores;
+      })
         .catch((error: Response) => { 
           this.errorService.handleError(error.json());
           return Observable.throw(error.json())
