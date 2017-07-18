@@ -1,0 +1,35 @@
+#scoreTableDisplay{
+    font-size:20px;
+}
+
+#scoreTableDisplay_h2{
+    font-size:30px;
+    color:blue;
+}
+
+@media(max-width: 1580px) {
+  #scoreTableDisplay{
+    font-size: 18px;
+  }
+  #scoreTableDisplay_h2 {
+    font-size: 25px; /* Fine tune unbehaved elements */
+  }
+}
+
+@media(max-width: 980px) {
+  #scoreTableDisplay{
+    font-size: 16px;
+  }
+  #scoreTableDisplay_h2 {
+    font-size: 20px; /* Fine tune unbehaved elements */
+  }
+}
+
+@media(max-width: 768px) {
+  #scoreTableDisplay{
+    font-size: 14px;
+  }
+  #scoreTableDisplay_h2 {
+    font-size: 16px; /* Fine tune unbehaved elements */
+  }
+}

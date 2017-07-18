@@ -1,0 +1,17 @@
+<br>
+<div class="row">
+    <app-score-entry-form  
+       (calculatedGHINEvent)='handleGHINText($event)'
+       (ghinTableEvent)='handleScoresArray($event)'></app-score-entry-form>
+</div>
+<br>
+<div class="row">
+    <app-ghin-display [ghinText]='ghinText'></app-ghin-display>
+</div>
+<br>
+<div class="row">
+    <app-scores [scoreTableMarked]='scoreTableMarked'></app-scores>
+</div>
+<div class="row">
+    <ghin-logout></ghin-logout>
+</div>
