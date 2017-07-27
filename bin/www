@@ -3,7 +3,6 @@
 /**
  * Module dependencies.
  */
-
 var app = require('../application');
 var debug = require('debug')('node-rest:server');
 var http = require('http');

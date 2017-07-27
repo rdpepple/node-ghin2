@@ -14,10 +14,16 @@ var scoreRoutes = require('./routes/score');
 var app = express();
 mongoose.Promise = global.Promise;
 
-mongoose.connect('localhost:27017/handicap_data')
-.catch ((err) => {
-        console.log(err);
-});
+// production mongo connect
+    mongoose.connect('10.0.2.161:27017/handicap_data')
+    .catch ((err) => {
+            console.log(err);
+    });
+// development mongo connect
+    // mongoose.connect('localhost/handicap_data')
+    // .catch ((err) => {
+    //         console.log(err);
+    // });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

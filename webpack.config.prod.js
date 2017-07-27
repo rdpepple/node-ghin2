@@ -2,9 +2,7 @@ var webpack = require('webpack');
 var webpackMerge = require('webpack-merge');
 var commonConfig = require('./webpack.config.common.js');
 
-console.log('dirname : ' + __dirname);
-
-module.exports = webpackMerge.smart(commonConfig, {
+module.exports = {
     entry: {
         'app': __dirname + '/app/main.aot.ts'
     },
@@ -35,4 +33,4 @@ module.exports = webpackMerge.smart(commonConfig, {
             sourceMap: false
         })
     ]
-});
+};
