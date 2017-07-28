@@ -3,7 +3,7 @@ yum update -y
 sudo yum install git -y
 sudo yum install -y gcc gcc-c++ make openssl-devel
 [ ! -d /ghin-app ] && mkdir -p /ghin-app
-sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 fs-983fe131.efs.us-west-2.amazonaws.com:/ /ghin-app
+# Mount for EFS volume - sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 fs-983fe131.efs.us-west-2.amazonaws.com:/ /ghin-app
 cd /tmp
 curl -O https://nodejs.org/dist/v6.11.1/node-v6.11.1.tar.gz
 tar -xf node-v6.11.1.tar.gz && rm -f node-v6.11.1.tar.gz
@@ -28,4 +28,5 @@ rsync -War ./ghin-app-prod/ /ghin-app/
 cd ..
 rm -rf ghin-app
 cd /ghin-app
+npm install
 npm start

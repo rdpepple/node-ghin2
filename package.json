@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "build": "del public/js/app && webpack --config webpack.config.new.js --progress --profile --watch",
-    "build:prod": "del public/js/app && ngc -p tsconfig.aot.json && ngc -p tsconfig.aot.json && webpack --config webpack.config.new.js -p --env.production --progress --profile --bail && del 'public/js/app/**/*.js' 'public/js/app/**/*.js.map' 'public/js/app/auth' 'public/js/app/errors' 'public/js/app/ghinDisplay' 'public/js/app/ghinMain' 'public/js/app/logout' 'public/js/app/scoreEntry' 'public/js/app/scoreTable' '!public/js/app/bundle.js' '!public/js/app/*.chunk.js' '!public/js/images/*.jpg' 'public/js/app/images' 'app/**/*.ngfactory.ts' 'app/**/*.shim.ts'"
+    "build": "del public/js/app && webpack --config webpack.config.js --progress --profile --watch",
+    "build:prod": "del public/js/app && ngc -p tsconfig.aot.json && ngc -p tsconfig.aot.json && webpack --config webpack.config.js -p --env.production --progress --profile --bail && del 'public/js/app/**/*.js' 'public/js/app/**/*.js.map' 'public/js/app/auth' 'public/js/app/errors' 'public/js/app/ghinDisplay' 'public/js/app/ghinMain' 'public/js/app/logout' 'public/js/app/scoreEntry' 'public/js/app/scoreTable' '!public/js/app/bundle.js' '!public/js/app/*.chunk.js' '!public/js/images/*.jpg' 'public/js/app/images' 'app/**/*.ngfactory.ts' 'app/**/*.shim.ts'"
   },
   "dependencies": {
     "@angular/common": "^2.4.0",

@@ -23,8 +23,8 @@ export class CourseService {
         ? '&userid=' + localStorage.getItem('userId')
         : '';  
       const params = token + userid;
-      // return this.http.post(`http://54.244.80.187:3000/course/addcourse${params}`, body, {headers: headers})
-      return this.http.post(`http://localhost:3000/course/addcourse${params}`, body, {headers: headers})
+      return this.http.post(`http://10.0.1.50:3000/course/addcourse${params}`, body, {headers: headers})
+      // return this.http.post(`http://localhost:3000/course/addcourse${params}`, body, {headers: headers})
         .map((response: Response) => {
             const result = response.json();
             const course = new Course(
@@ -51,8 +51,8 @@ export class CourseService {
           ? '&userid=' + localStorage.getItem('userId')
           : '';  
       const params = token + userid;
-      // return this.http.get(`http://54.244.80.187:3000/course/coursenames${params}`)
-      return this.http.get(`http://localhost:3000/course/coursenames${params}`)
+      return this.http.get(`http://10.0.1.50:3000/course/coursenames${params}`)
+      // return this.http.get(`http://localhost:3000/course/coursenames${params}`)
         .map((response: Response) => {
           const courses = response.json().obj;
           let courseList: Course[] = [];
@@ -82,8 +82,8 @@ export class CourseService {
         ? '&userid=' + localStorage.getItem('userId')
         : '';
     const params = token + userid + '&coursename=' + courseName;
-    // return this.http.get(`http://54.244.80.187:3000/course/course${params}`)
-    return this.http.get(`http://localhost:3000/course/course${params}`)
+    return this.http.get(`http://10.0.1.50:3000/course/course${params}`)
+    // return this.http.get(`http://localhost:3000/course/course${params}`)
     .map((response: Response) => {
       const course = response.json().obj;
       this.course = course;
