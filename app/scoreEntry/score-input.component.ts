@@ -76,12 +76,15 @@ export class ScoreInputComponent implements OnInit {
         newScoreRating,
         newScoreEntered
     );
-
+    
     this.scoreService.addScore(newScore)
-         .subscribe(
-            data => console.log(data),
-            error => console.error(error)          
-         );
+        .subscribe(
+            undefined,                    // onNext handler
+            error => console.log(error),  // onError handler
+            () => {                       // onCompetion handler
+//               console.log('Score addition complete');
+            }
+    );
 
     this.scoreService.getScores()
       .subscribe(
@@ -94,11 +97,13 @@ export class ScoreInputComponent implements OnInit {
             var i;
             this.scoreTable = [];
             for (let score of userScores) {
-              this.scoreTable.push(score);
-              const scoreSlope = score.slope;
-              const scoreRating = score.rating;
-              const scoreEntered = score.score;
-              calculatedDiffs.push(this.calculateDiff(scoreSlope, scoreRating, scoreEntered));
+              if (score) {
+                this.scoreTable.push(score);
+                const scoreSlope = score.slope;
+                const scoreRating = score.rating;
+                const scoreEntered = score.score;
+                calculatedDiffs.push(this.calculateDiff(scoreSlope, scoreRating, scoreEntered));
+              }
             }
             diffAverage = this.getDiffAverage(calculatedDiffs);
             if (diffAverage.diffAvg === 0) {
@@ -155,68 +160,71 @@ export class ScoreInputComponent implements OnInit {
       });
     }
 
-    var diffArraySorted = diffArrayWithIndices.sort(function(a, b) { return a.diff-b.diff });
+    var diffArraySorted = [];
+    if (diffArrayWithIndices.length > 0) {
+      diffArraySorted = diffArrayWithIndices.sort(function(a, b) { return a.diff-b.diff });
+    }
     var diffAvg;
     var numDiffsUsed = 0;
     var diffsUsedIndices = [];
     switch (diffArraySorted.length) {
-                case 0:
-                case 1:
-                case 2:
-                case 3:
-                case 4:
-                  diffAvg = 0;
-                  break;
-                case 5:
-                case 6:
-                  diffAvg = this.diffAverage(diffArraySorted, 1);
-                  numDiffsUsed = 1;
-                  break;
-                case 7:
-                case 8:
-                  diffAvg = this.diffAverage(diffArraySorted, 2);
-                  numDiffsUsed = 2;
-                  break;
-                case 9:
-                case 10:
-                  diffAvg = this.diffAverage(diffArraySorted, 3);
-                  numDiffsUsed = 3;
-                  break;
-                case 11:
-                case 12:
-                  diffAvg = this.diffAverage(diffArraySorted, 4);
-                  numDiffsUsed = 4;
-                  break;
-                case 13:
-                case 14:
-                  diffAvg = this.diffAverage(diffArraySorted, 5);
-                  numDiffsUsed = 5;
-                  break;
-                case 15:
-                case 16:
-                  diffAvg = this.diffAverage(diffArraySorted, 6);
-                  numDiffsUsed = 6;
-                  break;
-                case 17:
-                  diffAvg = this.diffAverage(diffArraySorted, 7);
-                  numDiffsUsed = 7;
-                  break;
-                case 18:
-                  diffAvg = this.diffAverage(diffArraySorted, 8);
-                  numDiffsUsed = 8;
-                  break;               
-                case 19:
-                  diffAvg = this.diffAverage(diffArraySorted, 9);
-                  numDiffsUsed = 9;
-                  break;
-                default:
-                  diffAvg = this.diffAverage(diffArraySorted, 10);
-                  numDiffsUsed = 10;
-            }
-            for (i=0; i<numDiffsUsed; i++) {
-                diffsUsedIndices.push(diffArraySorted[i].diffIndex);
-            }
-            return {diffAvg: diffAvg, diffsUsed: diffsUsedIndices};
+          case 0:
+          case 1:
+          case 2:
+          case 3:
+          case 4:
+            diffAvg = 0;
+            break;
+          case 5:
+          case 6:
+            diffAvg = this.diffAverage(diffArraySorted, 1);
+            numDiffsUsed = 1;
+            break;
+          case 7:
+          case 8:
+            diffAvg = this.diffAverage(diffArraySorted, 2);
+            numDiffsUsed = 2;
+            break;
+          case 9:
+          case 10:
+            diffAvg = this.diffAverage(diffArraySorted, 3);
+            numDiffsUsed = 3;
+            break;
+          case 11:
+          case 12:
+            diffAvg = this.diffAverage(diffArraySorted, 4);
+            numDiffsUsed = 4;
+            break;
+          case 13:
+          case 14:
+            diffAvg = this.diffAverage(diffArraySorted, 5);
+            numDiffsUsed = 5;
+            break;
+          case 15:
+          case 16:
+            diffAvg = this.diffAverage(diffArraySorted, 6);
+            numDiffsUsed = 6;
+            break;
+          case 17:
+            diffAvg = this.diffAverage(diffArraySorted, 7);
+            numDiffsUsed = 7;
+            break;
+          case 18:
+            diffAvg = this.diffAverage(diffArraySorted, 8);
+            numDiffsUsed = 8;
+            break;               
+          case 19:
+            diffAvg = this.diffAverage(diffArraySorted, 9);
+            numDiffsUsed = 9;
+            break;
+          default:
+            diffAvg = this.diffAverage(diffArraySorted, 10);
+            numDiffsUsed = 10;
+    }
+    for (i=0; i<numDiffsUsed; i++) {
+        diffsUsedIndices.push(diffArraySorted[i].diffIndex);
+    }
+    return {diffAvg: diffAvg, diffsUsed: diffsUsedIndices};
   }
 
   diffAverage(diffArray, numDiffsToUse) {
@@ -266,72 +274,7 @@ export class ScoreInputComponent implements OnInit {
     localStorage.setItem('userCourses', coursesJSON);
     localCourseList = JSON.parse(localStorage.getItem('userCourses'));
 
-    const initialCourseData = [
-    ];
-
-    const initialScoreData = [
-    ];
-
-    if (initialCourseData.length !== 0) {
-      for (let courseInit of initialCourseData) {
-          const initCourseName = courseInit.name;
-          const initCourseSlope = courseInit.slope;
-          const initCourseRating = courseInit.rating;
-          const initCourse = new Course(
-                initCourseName,
-                initCourseSlope,
-                initCourseRating
-            );
-        if (localCourseList.indexOf(initCourse) === -1) {
-            localCourseList.push(initCourseName);
-            if ( localCourseList.indexOf('No courses added to date') === 0 ) {
-                 localCourseList.shift();
-               }
-            const newCoursesJSON = JSON.stringify(localCourseList);
-            localStorage.setItem('userCourses', newCoursesJSON);
-            this.courseService.addCourse(initCourse)
-                .subscribe(
-                    data => console.log(data),
-                    error => console.error(error)
-                );
-        }
-      }
-      this.courseList = JSON.parse(localStorage.getItem('userCourses'));
-    }
-
-    if (initialScoreData.length !== 0) {
-        for (let initScore of initialScoreData) {
-            const initScoreDate = initScore.date_played;
-            const initScoreCourse = initScore.course;
-            const initScoreSlope = initScore.slope;
-            const initScoreRating = initScore.rating;
-            const initScoreEntered = initScore.score;
-
-        const newScore = new Score(
-            initScoreDate,
-            initScoreCourse,
-            initScoreSlope,
-            initScoreRating,
-            initScoreEntered 
-        );
-        this.scoreService.addScore(newScore)
-          .subscribe(
-              data => console.log(data),
-              error => console.error(error)          
-          );
-      } // end of score for loop
-    } // end of if initial data block
-
-    this.scoreForm = this.formBuilder.group({
-        selectedCourse: new FormControl(),
-        datePlayed: [null, Validators.required],
-        courseName: new FormControl(),
-        courseSlope: new FormControl(),
-        courseRating: new FormControl(),
-        scoreEntered: new FormControl()
-    });
-
-    if (initialCourseData.length === 0 ) {
+    if (this.initialCourseData.length === 0 ) {
         this.courseService.getCourseNames()
           .subscribe(
             (courses: Course[]) => {
@@ -349,7 +292,7 @@ export class ScoreInputComponent implements OnInit {
           );
     }
 
-      this.scoreService.getScores()
+    this.scoreService.getScores()
       .subscribe(
           (userScores: Score[]) => {
             var ghinDiffList = [];
@@ -357,21 +300,24 @@ export class ScoreInputComponent implements OnInit {
             var calculatedDiffsUsed = [];
             var diffAverage;
             var calculatedGhin;
-            var i;
             for (let score of userScores) {
-              this.scoreTable.push(score);
-              const scoreSlope = score.slope;
-              const scoreRating = score.rating;
-              const scoreEntered = score.score;
-              calculatedDiffs.push(this.calculateDiff(scoreSlope, scoreRating, scoreEntered));
+                if (score) {
+                  this.scoreTable.push(score);
+                  var scoreSlope = score.slope;
+                  var scoreRating = score.rating;
+                  var scoreEntered = score.score;
+                  calculatedDiffs.push(this.calculateDiff(scoreSlope, scoreRating, scoreEntered));
+                }
             }
             diffAverage = this.getDiffAverage(calculatedDiffs);
+//            console.log('calculated diff of fetched score -> ' + JSON.stringify(diffAverage));
             if (diffAverage.diffAvg === 0) {
                this.calculatedGHINText = "Must have at least 5 scores";
             } else {
                this.calculatedGHINText = `GHIN : ${this.calculateGHIN(diffAverage.diffAvg)}`;
             }
             var isUsed;
+            var i;
             for (i=0; i<this.scoreTable.length; i++) {
                 isUsed = true;
                 var indexPos = diffAverage.diffsUsed.indexOf(i);

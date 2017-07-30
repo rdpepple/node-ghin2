@@ -7,9 +7,7 @@ var userSchema = new Schema({
   lastName: {type: String, required: true},
   password: {type: String, required: true},
   email: {type: String, required: true, unique: true},
-  ghin: {type: Number, required: true, unique: true},
-  courses: [{type: Schema.Types.ObjectId, ref: 'Course'}],
-  scores: [{type: Schema.Types.ObjectId, ref: 'Score'}]
+  ghin: {type: Number, required: true, unique: true}
 });
 
 userSchema.plugin(mongooseUniqueValidator);

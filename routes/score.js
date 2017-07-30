@@ -21,8 +21,7 @@ router.use('/', function (req, res, next) {
 
 router.get('/scores', function (req, res, next) {
   var userId = mongoose.Types.ObjectId(req.query.userid);
-  Score.find({user : userId})
-    .exec(function(err, scores) {
+  Score.find({user : userId}, function(err, scores) {
        if (err) {
          return res.status(500).json({
            title: 'An error occurred',
@@ -30,7 +29,7 @@ router.get('/scores', function (req, res, next) {
          });
        }
        res.status(200).json({
-         message: 'Success',
+         message: 'Scores fetched',
          obj: scores
        });
     });
@@ -55,7 +54,7 @@ router.post('/addscore', function (req, res, next) {
             });
         }
         res.status(201).json({
-            message: 'Saved message',
+            message: 'Saved score',
             obj: result
         });
     });

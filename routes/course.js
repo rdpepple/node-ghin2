@@ -19,17 +19,17 @@ router.use('/', function (req, res, next) {
     })
 });
 
-  router.get('/coursenames', function (req, res, next) {
-  var userId = mongoose.Types.ObjectId(req.query.userid);
-  Course.find({user : userId}, function(err, courses) {
-       if (err) {
-         return res.status(500).json({
-           title: 'An error occurred',
-           error: err
-         });
-       }
+router.get('/coursenames', function (req, res, next) {
+    var userId = mongoose.Types.ObjectId(req.query.userid);
+    Course.find({user : userId}, function(err, courses) {
+        if (err) {
+           return res.status(500).json({
+               title: 'An error occurred',
+               error: err
+           });
+        }
        res.status(200).json({
-         message: 'Success',
+         message: 'Course names fetched',
          obj: courses
        });
   });
@@ -38,13 +38,13 @@ router.use('/', function (req, res, next) {
 router.post('/addcourse', function (req, res, next) {
     var decoded = jwt.decode(req.query.token);
     var userId = mongoose.Types.ObjectId(req.query.userid);
-    Course.findById(decoded.user._id, function (err, course) {
-        if (err) {
-            return res.status(500).json({
-                title: 'An error occurred',
-                error: err
-            });
-        }
+    // Course.findById(decoded.user._id, function (err, course) {
+    //     if (err) {
+    //         return res.status(500).json({
+    //             title: 'An error occurred',
+    //             error: err
+    //         });
+    //     }
         var course = new Course({
           name: req.body.name,
           slope: req.body.slope,
@@ -59,11 +59,11 @@ router.post('/addcourse', function (req, res, next) {
                 });
             }
             res.status(201).json({
-                message: 'Saved message',
+                message: 'Saved course',
                 obj: result
             });
         });
-    });
+    // });
 });
 
 router.get('/course', function(req, res, next) {

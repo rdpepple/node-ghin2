@@ -15,6 +15,7 @@ export class CourseService {
 
   addCourse(course: Course) {
       const body = JSON.stringify(course);
+//      console.log('course to add ->' + body);
       const headers = new Headers({'Content-Type': 'application/json'});
       const token = localStorage.getItem('token')
         ? '?token=' + localStorage.getItem('token')
@@ -23,8 +24,8 @@ export class CourseService {
         ? '&userid=' + localStorage.getItem('userId')
         : '';  
       const params = token + userid;
-      return this.http.post(`http://34.212.25.164:3000/course/addcourse${params}`, body, {headers: headers})
-      // return this.http.post(`http://localhost:3000/course/addcourse${params}`, body, {headers: headers})
+      // return this.http.post(`http://34.212.25.164:3000/course/addcourse${params}`, body, {headers: headers})
+      return this.http.post(`http://localhost:3000/course/addcourse${params}`, body, {headers: headers})
         .map((response: Response) => {
             const result = response.json();
             const course = new Course(
@@ -51,10 +52,11 @@ export class CourseService {
           ? '&userid=' + localStorage.getItem('userId')
           : '';  
       const params = token + userid;
-      return this.http.get(`http://34.212.25.164:3000/course/coursenames${params}`)
-      // return this.http.get(`http://localhost:3000/course/coursenames${params}`)
+      // return this.http.get(`http://34.212.25.164:3000/course/coursenames${params}`)
+      return this.http.get(`http://localhost:3000/course/coursenames${params}`)
         .map((response: Response) => {
           const courses = response.json().obj;
+//          console.log('course names fetched -> ' + JSON.stringify(courses));
           let courseList: Course[] = [];
           for (let course of courses) {
             // courseList.push(course.name);
@@ -82,8 +84,8 @@ export class CourseService {
         ? '&userid=' + localStorage.getItem('userId')
         : '';
     const params = token + userid + '&coursename=' + courseName;
-    return this.http.get(`http://34.212.25.164:3000/course/course${params}`)
-    // return this.http.get(`http://localhost:3000/course/course${params}`)
+    // return this.http.get(`http://34.212.25.164:3000/course/course${params}`)
+    return this.http.get(`http://localhost:3000/course/course${params}`)
     .map((response: Response) => {
       const course = response.json().obj;
       this.course = course;

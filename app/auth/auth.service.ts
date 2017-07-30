@@ -15,8 +15,8 @@ export class AuthService {
     signup(user: User) {
         const body = JSON.stringify(user);
         const headers = new Headers({'Content-Type': 'application/json'});
-        return this.http.post('http://34.212.25.164:3000/user/signup', body, {headers: headers})
-        // return this.http.post('http://localhost:3000/user/signup', body, {headers: headers})
+        // return this.http.post('http://34.212.25.164:3000/user/signup', body, {headers: headers})
+        return this.http.post('http://localhost:3000/user/signup', body, {headers: headers})
             .map((response: Response) => response.json())
             .catch((error: Response) => { 
                 this.errorService.handleError(error.json());
@@ -27,8 +27,8 @@ export class AuthService {
     signin(user: User) {       
         const body = JSON.stringify(user);
         const headers = new Headers({'Content-Type': 'application/json'});
-        return this.http.post('http://34.212.25.164:3000/user/signin', body, {headers: headers})
-        // return this.http.post('http://localhost:3000/user/signin', body, {headers: headers})
+        // return this.http.post('http://34.212.25.164:3000/user/signin', body, {headers: headers})
+        return this.http.post('http://localhost:3000/user/signin', body, {headers: headers})
             .map((response: Response) => response.json())
             .catch((error: Response) => { 
                 this.errorService.handleError(error.json());
