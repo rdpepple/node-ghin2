@@ -29,4 +29,5 @@ cd ..
 rm -rf ghin-app
 cd /ghin-app
 npm install
+echo "Instance is healthy" >/ghin-app/healthy.html
 npm start

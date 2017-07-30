@@ -24,8 +24,8 @@ export class ScoreService {
           ? '&userid=' + localStorage.getItem('userId')
           : '';  
       const params = token + userid;
-    //   return this.http.post(`http://34.212.25.164:3000/score/addscore${params}`, body, {headers: headers})
-      return this.http.post(`http://localhost:3000/score/addscore${params}`, body, {headers: headers})
+      return this.http.post(`http://34.212.25.164:3000/score/addscore${params}`, body, {headers: headers})
+    //   return this.http.post(`http://localhost:3000/score/addscore${params}`, body, {headers: headers})
         .map((response: Response) => response.json())
         .catch((error: Response) => {
             this.errorService.handleError(error.json());
@@ -41,8 +41,8 @@ export class ScoreService {
           ? '&userid=' + localStorage.getItem('userId')
           : '';  
       const params = token + userid;
-    //   return this.http.get(`http://34.212.25.164:3000/score/scores${params}`)
-      return this.http.get(`http://localhost:3000/score/scores${params}`)
+      return this.http.get(`http://34.212.25.164:3000/score/scores${params}`)
+    //   return this.http.get(`http://localhost:3000/score/scores${params}`)
         .map((response: Response) => {
           const scores = response.json().obj;
 //          console.log('scores fetched -> ' + JSON.stringify(scores));
