@@ -38,8 +38,8 @@ module.exports = (env = {}) => {
                         loader: 'raw-loader'
                     },
                     {
-                        test: /\.(png|jpe?g|gif)$/,
-                        loader: "file-loader?name=images/img-[hash:6].[ext]"
+                        test: /\.(png|jpg|gif)$/,
+                        loader: "file-loader?name=/images/img-[hash:6].[ext]"
                     }
                 ]
             },
@@ -94,8 +94,8 @@ module.exports = (env = {}) => {
                         loader: 'raw-loader'
                     },
                     {
-                        test: /\.(png|jpe?g|gif)$/,
-                        loader: "file-loader?name=images/img-[hash:6].[ext]"
+                        test: /\.(png|jpg|gif)$/,
+                        loader: "file-loader?name=/images/img-[hash:6].[ext]"
                     }
                 ]
             },

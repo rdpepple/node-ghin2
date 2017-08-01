@@ -1,9 +1,11 @@
 {
   "compilerOptions": {
-    "moduleResolution": "node",
+    "module": "commonjs",
+    "target": "es5",
+    "noImplicitAny": false,
+    "sourceMap": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "es5",
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -11,5 +13,9 @@
       "es5",
       "dom"
     ]
-  }
+  },
+  "exclude": [
+      "node_modules",
+      "public/js"
+  ]
 }

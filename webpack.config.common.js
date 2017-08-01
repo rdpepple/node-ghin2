@@ -1,8 +1,9 @@
 var webpack = require('webpack');
+var path = require('path');
 
 module.exports = {
     entry: {
-        'app': __dirname + '/app/main.ts'
+        'app': path.resolve(__dirname + '/app/main.ts')
     },
 
     resolve: {
@@ -10,7 +11,7 @@ module.exports = {
     },
 
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.ts$/,
                 loaders: [
@@ -26,10 +27,6 @@ module.exports = {
             {
                 test: /\.css$/,
                 loader: 'raw-loader'
-            },
-            {
-                test: /\.(png|jpg|gif)$/,
-                loader: "file-loader?name=images/img-[hash:6].[ext]"
             }
         ]
     },
