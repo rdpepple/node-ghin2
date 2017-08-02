@@ -24,7 +24,7 @@ export class CourseService {
         ? '&userid=' + localStorage.getItem('userId')
         : '';  
       const params = token + userid;
-      return this.http.post(`http://34.212.25.164:3000/course/addcourse${params}`, body, {headers: headers})
+      return this.http.post(`http://ghin-rdp.net:3000/course/addcourse${params}`, body, {headers: headers})
       // return this.http.post(`http://localhost:3000/course/addcourse${params}`, body, {headers: headers})
         .map((response: Response) => {
             const result = response.json();
@@ -52,7 +52,7 @@ export class CourseService {
           ? '&userid=' + localStorage.getItem('userId')
           : '';  
       const params = token + userid;
-      return this.http.get(`http://34.212.25.164:3000/course/coursenames${params}`)
+      return this.http.get(`http://ghin-rdp.net:3000/course/coursenames${params}`)
       // return this.http.get(`http://localhost:3000/course/coursenames${params}`)
         .map((response: Response) => {
           const courses = response.json().obj;
@@ -84,7 +84,7 @@ export class CourseService {
         ? '&userid=' + localStorage.getItem('userId')
         : '';
     const params = token + userid + '&coursename=' + courseName;
-    return this.http.get(`http://34.212.25.164:3000/course/course${params}`)
+    return this.http.get(`http://ghin-rdp.net:3000/course/course${params}`)
     // return this.http.get(`http://localhost:3000/course/course${params}`)
     .map((response: Response) => {
       const course = response.json().obj;
