@@ -39,53 +39,8 @@ export class ScoreInputComponent implements OnInit {
         editableDateField: false,
         openSelectorOnInputClick: true
     };
-    
-  onSubmit() {
-    var localCourseList = JSON.parse(localStorage.getItem('userCourses'))
-    const newScoreDate = this.scoreForm.value.datePlayed.formatted;
-    const newScoreCourse = this.scoreForm.value.courseName;
-    const newScoreSlope = this.scoreForm.value.courseSlope;
-    const newScoreRating = this.scoreForm.value.courseRating;
-    const newScoreEntered = this.scoreForm.value.scoreEntered;
-    const newCourse = new Course(
-        newScoreCourse,
-        newScoreSlope,
-        newScoreRating
-    );
 
-    if (localCourseList.indexOf(newScoreCourse) === -1) {
-      localCourseList.push(newScoreCourse);
-      if ( localCourseList.indexOf('No courses added to date') === 0 ) {
-         localCourseList.shift();
-      }
-      const newCoursesJSON = JSON.stringify(localCourseList);
-      localStorage.setItem('userCourses', newCoursesJSON);
-      this.courseService.addCourse(newCourse)
-            .subscribe(
-                data => console.log(data),
-                error => console.error(error)
-            );
-    }
-
-    this.courseList = JSON.parse(localStorage.getItem('userCourses'));
- 
-    const newScore = new Score(
-        newScoreDate,
-        newScoreCourse,
-        newScoreSlope,
-        newScoreRating,
-        newScoreEntered
-    );
-    
-    this.scoreService.addScore(newScore)
-        .subscribe(
-            undefined,                    // onNext handler
-            error => console.log(error),  // onError handler
-            () => {                       // onCompetion handler
-//               console.log('Score addition complete');
-            }
-    );
-
+  getScores() {
     this.scoreService.getScores()
       .subscribe(
           (userScores: Score[]) => {
@@ -131,9 +86,61 @@ export class ScoreInputComponent implements OnInit {
 
             this.calculatedGHINEvent.emit(this.calculatedGHINText);
             this.ghinTableEvent.emit(this.scoreTableMarked);
+            // console.log('Scores fetched and calculations completed');
           },
           error => console.error(error)      
       );
+  };
+    
+  onSubmit() {
+    var localCourseList = JSON.parse(localStorage.getItem('userCourses'))
+    const newScoreDate = this.scoreForm.value.datePlayed.formatted;
+    const newScoreCourse = this.scoreForm.value.courseName;
+    const newScoreSlope = this.scoreForm.value.courseSlope;
+    const newScoreRating = this.scoreForm.value.courseRating;
+    const newScoreEntered = this.scoreForm.value.scoreEntered;
+    const newCourse = new Course(
+        newScoreCourse,
+        newScoreSlope,
+        newScoreRating
+    );
+    var numScoresBeforeAdd = 0;
+    var numScoresAfterAdd = 0;
+
+    if (localCourseList.indexOf(newScoreCourse) === -1) {
+      localCourseList.push(newScoreCourse);
+      if ( localCourseList.indexOf('No courses added to date') === 0 ) {
+         localCourseList.shift();
+      }
+      const newCoursesJSON = JSON.stringify(localCourseList);
+      localStorage.setItem('userCourses', newCoursesJSON);
+      this.courseService.addCourse(newCourse)
+            .subscribe(
+                data => console.log(data),
+                error => console.error(error)
+            );
+    }
+
+    this.courseList = JSON.parse(localStorage.getItem('userCourses'));
+ 
+    const newScore = new Score(
+        newScoreDate,
+        newScoreCourse,
+        newScoreSlope,
+        newScoreRating,
+        newScoreEntered
+    );
+    
+    var scoreAdded = false;
+    this.scoreService.addScore(newScore)
+        .subscribe(
+            undefined,                    // onNext handler
+            error => console.log(error),  // onError handler
+            () => {                       // onCompletion handler
+              //  console.log('Score addition complete');
+               this.getScores();
+            }
+    );
     this.scoreForm.reset();
   }
 

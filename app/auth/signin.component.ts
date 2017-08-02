@@ -22,6 +22,7 @@ export class SigninComponent implements OnInit {
             ]),
             password: new FormControl('', Validators.required)
         });
+        this.signinForm.reset();
     }
 
     onHomeClick() {

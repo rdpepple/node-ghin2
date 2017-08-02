@@ -10,6 +10,7 @@ import { Score } from "./score.model";
 export class ScoreService {
   private scores: Score[] = [];
   private score: Score;
+  private numScores;
 
   constructor(private http: Http, private errorService: ErrorService) {}
 
@@ -74,9 +75,9 @@ export class ScoreService {
         this.scores = userScores;
         return userScores;
       })
-        .catch((error: Response) => { 
+      .catch((error: Response) => { 
           this.errorService.handleError(error.json());
           return Observable.throw(error.json())
-        });
+      });
   }
 }

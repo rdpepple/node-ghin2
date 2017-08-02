@@ -8,8 +8,7 @@ import { User } from "./user.model";
 
 @Injectable()
 export class AuthService {
-    
-    
+        
     constructor(private http: Http, private errorService: ErrorService) {}
 
     signup(user: User) {
