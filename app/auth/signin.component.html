@@ -3,7 +3,8 @@
     <form [formGroup]="signinForm" (ngSubmit)="onSubmit(signinForm.value)">
         <div class="form-group">
             <label for="email">EMAIL</label>
-            <input
+            <input  data-toggle="tooltip" 
+                    title="The email entered at signup."
                     type="text"
                     id="email"
                     name="email"
