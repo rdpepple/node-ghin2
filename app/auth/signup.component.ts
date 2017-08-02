@@ -46,5 +46,6 @@ export class SignupComponent implements OnInit {
             ]),
             password: new FormControl('', Validators.required)
         });
+        this.signupForm.reset();
     }
 }
