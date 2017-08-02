@@ -15,7 +15,7 @@ export class AuthService {
     signup(user: User) {
         const body = JSON.stringify(user);
         const headers = new Headers({'Content-Type': 'application/json'});
-        return this.http.post('http://ghin-rdp.net:3000/user/signup', body, {headers: headers})
+        return this.http.post('http://rdp-ghin-LB-1553122097.us-west-2.elb.amazonaws.com/user/signup', body, {headers: headers})
         // return this.http.post('http://localhost:3000/user/signup', body, {headers: headers})
             .map((response: Response) => response.json())
             .catch((error: Response) => { 
@@ -27,7 +27,7 @@ export class AuthService {
     signin(user: User) {       
         const body = JSON.stringify(user);
         const headers = new Headers({'Content-Type': 'application/json'});
-        return this.http.post('http://ghin-rdp.net:3000/user/signin', body, {headers: headers})
+        return this.http.post('http://rdp-ghin-LB-1553122097.us-west-2.elb.amazonaws.com/user/signin', body, {headers: headers})
         // return this.http.post('http://localhost:3000/user/signin', body, {headers: headers})
             .map((response: Response) => response.json())
             .catch((error: Response) => { 
